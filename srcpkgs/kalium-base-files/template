@@ -3,7 +3,7 @@ pkgname=kalium-base-files
 version=26.03
 revision=2
 bootstrap=yes
-depends="xbps-triggers"
+depends="base-minimal xbps-triggers"
 short_desc="Kalium base system files"
 maintainer="vs-123"
 license="Public Domain"
@@ -42,7 +42,7 @@ do_install() {
 		vinstall ${FILESDIR}/dot_${f} 644 etc/skel .${f}
 	done
 #
-#	vinstall ${FILESDIR}/securetty 600 etc
+	vinstall ${FILESDIR}/securetty 600 etc
 	for f in profile hosts host.conf issue subuid subgid \
 		inputrc fstab passwd group crypttab nsswitch.conf; do
 		vinstall ${FILESDIR}/${f} 644 etc

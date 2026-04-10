@@ -2,8 +2,8 @@
 pkgname=kalium-base-files
 version=26.03
 revision=2
-#bootstrap=yes
-#depends="xbps-triggers"
+bootstrap=yes
+depends="xbps-triggers"
 short_desc="Kalium base system files"
 maintainer="vs-123"
 license="Public Domain"
@@ -26,7 +26,7 @@ conf_files="
 	/etc/crypttab
 	/etc/nsswitch.conf"
 
-#replaces="base-files>=0"
+replaces="base-files>=0"
 # New system groups
 system_groups="kvm:24 plugdev:26 usbmon:27 sgx:28"
 

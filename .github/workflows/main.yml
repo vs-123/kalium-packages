@@ -94,3 +94,6 @@ jobs:
         with:
           files: |
             void-packages/hostdir/binpkgs/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

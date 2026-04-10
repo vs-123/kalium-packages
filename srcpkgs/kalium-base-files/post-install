@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ -x /bin/zsh ]
+then
+    chsh -s /bin/zsh root
+fi

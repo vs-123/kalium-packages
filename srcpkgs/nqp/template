@@ -1,0 +1,21 @@
+# Template file for 'nqp'
+pkgname=nqp
+version=2026.02
+revision=1
+build_style=configure
+make_check_target=test
+configure_script="perl Configure.pl"
+configure_args="--prefix=/usr --backends=moar"
+hostmakedepends="git perl"
+makedepends="MoarVM libffi-devel libtommath-devel libuv-devel mimalloc-devel"
+depends="MoarVM-${version}_${revision}"
+short_desc="Lightweight Raku-like environment for virtual machines"
+maintainer="Andy Weidenbaum <atweiden@tutanota.de>"
+license="Artistic-2.0"
+homepage="https://github.com/Raku/nqp"
+distfiles="https://rakudo.org/dl/nqp/nqp-${version}.tar.gz"
+checksum=63d151194d634accb373b73fb734413a4a143a7248e530b75ca686f3f68e2539
+case "$XBPS_TARGET_MACHINE" in
+	arm*|aarch64*) disable_parallel_build=yes;;
+esac
+nocross=yes

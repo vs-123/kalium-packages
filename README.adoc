@@ -1,0 +1,101 @@
+:em: {sp}--{sp}
+:license: GNU Affero General Public License version 3.0 or later
+:license-link: link:https://www.gnu.org/licenses/agpl-3.0.en.html[]
+:raw-url: https://raw.githubusercontent.com/vs-123/pong/refs/heads/main
+
+= KALIUM PACKAGE COLLECTION
+
+This repository contains the XBPS source packages collection to build binary packages for Kalium.
+
+The included `xbps-src` script will fetch and compile the sources, and install its files into a `fake destdir` to generate XBPS binary packages that can be installed or queried through the `xbps-install(1)` and `xbps-query(1)` utilities, respectively.
+
+See link:./CONTRIBUTING.md[Contributing] for a general overview of how to contribute and the link:./Manual.md[Manual] for details of how to create source packages.
+
+== TABLE OF CONTENTS
+
+* <<requirements, REQUIREMENTS>>
+* <<quick-start, QUICK START>>
+* <<chroot-methods, CHROOT METHODS>>
+* <<install-bootstrap, INSTALL THE BOOTSTRAP PACKAGES>>
+* <<configuration, CONFIGURATION>>
+* <<directory-hierarchy, DIRECTORY HIERARCHY>>
+* <<building-packages, BUILDING PACKAGES>>
+* <<build-options, PACKAGE BUILD OPTIONS>>
+* <<sharing-and-signing, SHARING AND SIGNING YOUR LOCAL REPOSITORIES>>
+* <<rebuilding, REBUILDING AND OVERWRITING EXISTING LOCAL PACKAGES>>
+* <<distcc, ENABLING DISTCC FOR DISTRIBUTED COMPILATION>>
+* <<distfiles-mirrors, DISTFILES MIRRORS>>
+* <<cross-compiling, CROSS COMPILING PACKAGES FOR A TARGET ARCHITECTURE>>
+* <<foreign, USING XBPS-SRC IN A FOREIGN LINUX DISTRIBUTION>>
+* <<remaking-masterdir, REMAKING THE MASTERDIR>>
+* <<updating-masterdir, KEEPING YOUR MASTERDIR UPTODATE>>
+* <<building-32bit, BUILDING 32BIT PACKAGES ON X86_64>>
+* <<building-for-musl, BUILDING PACKAGES NATIVELY FOR THE MUSL C LIBRARY>>
+* <<building-base-system, BUILDING KALIUM BASE-SYSTEM FROM SCRATCH>>
+
+[[requirements]]
+== REQUIREMENTS
+
+* GNU bash
+* xbps >= 0.56
+* git(1) - unless configured to not, see etc/defaults.conf
+* common POSIX utilities included by default in almost all UNIX systems
+* curl(1) - required by `xbps-src update-check`
+
+For bootstrapping from source additionally:
+
+* flock(1) - util-linux
+* bsdtar or GNU tar (in that order of preference)
+* install(1) - GNU coreutils
+* objcopy(1), objdump(1), strip(1): binutils
+
+`xbps-src` requires <<chroot-methods, a utility to chroot>> and bind mount existing directories into a `masterdir` that is used as its main `chroot` directory. `xbps-src` supports multiple utilities to accomplish this task.
+
+[NOTE]
+====
+`xbps-src` does not allow building as root anymore. Use one of the chroot methods.
+====
+
+[[quick-start]]
+== QUICK START
+
+Clone the `Kalium-packages` git repository:
+
+----
+$ git clone https://github.com/Kalium-linux/Kalium-packages.git
+$ cd Kalium-packages
+----
+
+Bootstrapping from binary packages will be done automatically when first building a package, but it can be done manually with:
+
+----
+$ ./xbps-src binary-bootstrap
+----
+
+Build a package by specifying the `pkg` target and the package name:
+
+----
+$ ./xbps-src pkg <package_name>
+----
+
+Use `./xbps-src -h` to list all available targets and options.
+
+To build packages marked as 'restricted', modify `etc/conf`:
+
+----
+$ echo XBPS_ALLOW_RESTRICTED=yes >> etc/conf
+----
+
+Once built, the package will be available in `hostdir/binpkgs` or an appropriate subdirectory (e.g. `hostdir/binpkgs/nonfree`). To install the package:
+
+----
+# xbps-install --repository hostdir/binpkgs <package_name>
+----
+
+== LICENSE
+
+This project is licensed under the *{license}*.
+
+*NO WARRANTY PROVIDED*
+
+For more information, see `LICENSE` file or visit {license-link}.

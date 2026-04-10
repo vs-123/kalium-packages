@@ -1,0 +1,10 @@
+NAME="Kalium"
+ID="kalium"
+PRETTY_NAME="Kalium Linux"
+HOME_URL="https://github.com/vs-123"
+DOCUMENTATION_URL=""
+LOGO="kalium-logo"
+ANSI_COLOR="0;38;2;71;128;97"
+
+DISTRIB_ID="kalium"
+

@@ -15,8 +15,8 @@ jobs:
         include:
           #- { host: x86_64, target: x86_64 }
           #- { host: x86_64-musl, target: x86_64-musl }
-          - { host: x86_64, target: aarch64 }
-          #- { host: x86_64-musl, target: aarch64-musl }
+          #- { host: x86_64, target: aarch64 }
+          - { host: x86_64-musl, target: aarch64-musl }
     runs-on: ubuntu-22.04
 
     steps:

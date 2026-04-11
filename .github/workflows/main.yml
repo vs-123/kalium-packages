@@ -68,9 +68,11 @@ jobs:
           if [[ "${{ matrix.host }}" == "${{ matrix.target }}" ]]; then
             ./xbps-src -A ${{ matrix.host }} binary-bootstrap
             ./xbps-src pkg -j4 -A ${{ matrix.host }} kalium-base-files
+            ./xbps-src pkg -j4 -A ${{ matrix.host }} ktools
           else
             ./xbps-src -a ${{ matrix.target }} -A ${{ matrix.host }} binary-bootstrap
             ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} kalium-base-files
+            ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} ktools
           fi
 
       - name: sign

@@ -5,11 +5,11 @@ revision=1
 build_style=gnu-makefile
 depends="curl git make spdx-licenses-list xtools-minimal-${version}_${revision}"
 short_desc="Opinionated helpers for working with XBPS for Kalium Void"
-maintainer="Leah Neukirchen <leah@vuxu.org>"
-license="Public Domain"
-homepage="https://git.vuxu.org/xtools"
-distfiles="https://git.vuxu.org/xtools/snapshot/xtools-${version}.tar.gz"
-checksum=0671e75984fad7826feb8bf2133a4547a2ad095171348597895eda4fe92f88ee
+maintainer="vs-123"
+license="AGPLv3.0"
+homepage="https://github.com/vs-123/ktools"
+distfiles="https://github.com/vs-123/ktools/archive/refs/tags/v${version}.tar.gz"
+checksum=99a2aab8c3609ea50ae941a9150976dc9efc2452e97e79edd00b37ead873a87e
 
 # all xtools that can function without git installed
 # (git is by far the largest dependency)

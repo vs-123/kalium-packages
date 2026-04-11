@@ -50,7 +50,9 @@ jobs:
           path: void-packages
 
       - name: copy kalium-packages into srcpkgs
-        run: cp -rv kalium-packages/srcpkgs/kalium-base-files void-packages/srcpkgs
+        run: |
+          cp -rv kalium-packages/srcpkgs/kalium-base-files void-packages/srcpkgs
+          cp -rv kalium-packages/srcpkgs/ktools void-packages/srcpkgs
 
       - name: prepare xbps-static
         run: |

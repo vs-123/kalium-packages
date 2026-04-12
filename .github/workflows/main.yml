@@ -92,10 +92,12 @@ jobs:
         working-directory: void-packages/hostdir/binpkgs/
         run: |
           export PATH="/opt/xbps/usr/bin/:$PATH"
+          echo "${{ secrets.PRIV_KEY }}" > /tmp/privkey.pem
           xbps-rindex -r $PWD
-          xbps-rindex -s --signedby "${{ vars.SIGNEDBY }}" --privkey <(printf '%s' "${{ secrets.PRIV_KEY }}") $PWD
+          xbps-rindex -s --signedby "${{ vars.SIGNEDBY }}" --privkey /tmp/privkey.pem $PWD
           xbps-rindex -S --privkey <(printf '%s' "${{ secrets.PRIV_KEY }}") *.xbps
           xbps-rindex -c $PWD
+          rm -f /tmp/privkey.pem
 
       - name: checksum
         working-directory: void-packages/hostdir/binpkgs/

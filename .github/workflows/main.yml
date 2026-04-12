@@ -95,7 +95,7 @@ jobs:
           echo "${{ secrets.PRIV_KEY }}" > /tmp/privkey.pem
           xbps-rindex -r $PWD
           xbps-rindex -s --signedby "${{ vars.SIGNEDBY }}" --privkey /tmp/privkey.pem $PWD
-          xbps-rindex -S --privkey <(printf '%s' "${{ secrets.PRIV_KEY }}") *.xbps
+          xbps-rindex -S --privkey /tmp/privkey.pem *.xbps
           xbps-rindex -c $PWD
           rm -f /tmp/privkey.pem
 

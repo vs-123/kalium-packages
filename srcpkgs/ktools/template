@@ -27,26 +27,28 @@ pkg_install() {
 			vmove usr/share/fish/vendor_completions.d/$tool.fish
 		fi
 	done
-	vmove usr/share/man/man1/ktools.1
+#	vmove usr/share/man/man1/ktools.1
 	vmove usr/share/zsh
 	vmove usr/share/fish/vendor_functions.d
 :
 }
 
-#ktools-minimal_package() {
-#	short_desc+=" - minimal subset"
-#	depends="bash findutils xbps"
-##	pkg_install() {
-##		for tool in "${_minimal[@]}"; do
-##			vmove usr/bin/$tool
-##			#vmove usr/share/man/man1/$tool.1
-##			if [ -e "$DESTDIR/usr/share/fish/vendor_completions.d/$tool.fish" ]; then
-##				vmove usr/share/fish/vendor_completions.d/$tool.fish
-##			fi
-##		done
-##		vmove usr/share/man/man1/ktools.1
-##		vmove usr/share/zsh
-##		vmove usr/share/fish/vendor_functions.d
-##	}
-#	:
-#}
+ktools-minimal_package() {
+	short_desc+=" - minimal subset"
+	depends="bash findutils xbps"
+	metapackage=no
+	pkg_install() {
+		for tool in "${_minimal[@]}"; do
+			vmove usr/bin/$tool
+			#vmove usr/share/man/man1/$tool.1
+			if [ -e "$DESTDIR/usr/share/fish/vendor_completions.d/$tool.fish" ]; then
+				vmove usr/share/fish/vendor_completions.d/$tool.fish
+			fi
+		done
+		#vmove usr/share/man/man1/ktools.1
+		vmove usr/share/zsh
+		vmove usr/share/fish/vendor_functions.d
+		:
+	}
+	:
+}

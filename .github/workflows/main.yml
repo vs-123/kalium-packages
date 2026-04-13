@@ -113,6 +113,7 @@ jobs:
             fi
           done
           find . -name "*.xbps" -exec xbps-rindex -S --privkey /tmp/privkey.pem {} +
+          xbps-rindex -c $PWD
           rm -f /tmp/privkey.pem
 
       - name: checksum
@@ -125,8 +126,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            void-packages/hostdir/binpkgs/**/*.xbps
-            void-packages/hostdir/binpkgs/**/*repodata*
+            void-packages/hostdir/binpkgs/**/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

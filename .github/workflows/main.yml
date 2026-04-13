@@ -105,15 +105,14 @@ jobs:
         run: |
           export PATH="/opt/xbps/usr/bin/:$PATH"
           echo "${{ secrets.PRIV_KEY }}" > /tmp/privkey.pem
-          for dir in $(find . -maxdepth 1 -type d)
-          do
-            if [ "$dir" != "." ]; then
-              xbps-rindex -r "$dir"
+          find . -name "*.xbps" -exec xbps-rindex -S --privkey /tmp/privkey.pem {} +
+          for dir in $(find . -maxdepth 1 -type d); do
+            if [ "$dir" != "." ] && [ "$dir" != "./." ]; then
+              echo "INDEXING AND SIGNING REPOSITORY IN $DIR..."
+              xbps-rindex -a "$dir"/*.xbps
               xbps-rindex -s --signedby "${{ vars.SIGNEDBY }}" --privkey /tmp/privkey.pem "$dir"
             fi
           done
-          find . -name "*.xbps" -exec xbps-rindex -S --privkey /tmp/privkey.pem {} +
-          xbps-rindex -c $PWD
           rm -f /tmp/privkey.pem
 
       - name: checksum
@@ -126,7 +125,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            void-packages/hostdir/binpkgs/**/*
+            void-packages/hostdir/binpkgs/**/*.xbps
+            void-packages/hostdir/binpkgs/**/*.sig2
+            void-packages/hostdir/binpkgs/**/*repodata*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

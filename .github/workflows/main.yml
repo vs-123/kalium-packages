@@ -113,6 +113,9 @@ jobs:
               xbps-rindex -s --signedby "${{ vars.SIGNEDBY }}" --privkey /tmp/privkey.pem "$dir"
             fi
           done
+          xbps-rindex -r $PWD
+          xbps-rindex --sign --signedby "${{ vars.SIGNEDBY }}" --privkey /tmp/privkey.pem .
+          xbps-rindex --sign --signedby "${{ vars.SIGNEDBY }}" --privkey /tmp/privkey.pem $PWD
           rm -f /tmp/privkey.pem
 
       - name: checksum

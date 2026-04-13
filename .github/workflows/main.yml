@@ -54,6 +54,9 @@ jobs:
           cp -rv kalium-packages/srcpkgs/kalium-base-files void-packages/srcpkgs
           cp -av kalium-packages/srcpkgs/ktools void-packages/srcpkgs
           cp -av kalium-packages/srcpkgs/ktools-minimal void-packages/srcpkgs
+          rm -rf void-packages/fastfetch
+          cp -av kalium-packages/srcpkgs/fastfetch void-packages/srcpkgs
+          cp -av kalium-packages/srcpkgs/kfastfetch void-packages/srcpkgs
 
       - name: prepare xbps-static
         run: |
@@ -83,6 +86,7 @@ jobs:
             ./xbps-src pkg -j4 -A ${{ matrix.host }} Vulkan-Headers
             ./xbps-src pkg -j4 -A ${{ matrix.host }} vulkan-loader
             ./xbps-src pkg -j4 -A ${{ matrix.host }} fastfetch
+            ./xbps-src pkg -j4 -A ${{ matrix.host }} kfastfetch
           else
             ./xbps-src -a ${{ matrix.target }} -A ${{ matrix.host }} binary-bootstrap
             ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} kalium-base-files
@@ -90,6 +94,7 @@ jobs:
             ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} Vulkan-Headers
             ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} vulkan-loader
             ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} fastfetch
+            ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} kfastfetch
           fi
 
       - name: sign

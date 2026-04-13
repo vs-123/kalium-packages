@@ -1,0 +1,40 @@
+# Template file for 'kfastfetch'
+pkgname=kfastfetch
+version=26.01
+revision=2
+build_style=cmake
+configure_args="-DENABLE_SYSTEM_YYJSON=ON -DBUILD_FLASHFETCH=OFF -DENABLE_VULKAN=OFF"
+hostmakedepends="pkg-config python3"
+makedepends="yyjson-devel vulkan-loader-devel libXrandr-devel wayland-devel libdrm-devel
+ glib-devel dconf-devel libmagick-devel chafa-devel zlib-devel dbus-devel MesaLib-devel
+ OpenCL-Headers dbus-devel pulseaudio-devel ddcutil-devel elfutils-devel"
+short_desc="System information fetching tool for Kalium Void"
+maintainer="vs-123"
+license="AGPLv3.0-or-later"
+homepage="https://github.com/vs-123/fastfetch"
+distfiles="https://github.com/vs-123/fastfetch/archive/refs/tags/${version}.tar.gz"
+checksum=f838d378a9f2b85fb303beb7450a6a17da7df754012c7b213987528eef079f22
+replaces="fastfetch>=0"
+
+case "$XBPS_TARGET_MACHINE" in
+	x86_64|aarch64) makedepends+=" DirectX-Headers" ;;
+esac
+
+if [ -n "$XBPS_CHECK_PKGS" ]; then
+	configure_args+=" -DBUILD_TESTS=ON"
+fi
+
+# missing for finding Vulkan-Headers as #include <vulkan/vulkan.h>
+CFLAGS="-I/usr/include"
+
+pre_configure() {
+	# disable most package managers by default using horrible hacks, because upstream did it weird
+	mkdir -p build && cd build
+	configure_args+="$(CMAKE_GENERATOR="Ninja" cmake -L ${wrksrc}/${build_wrksrc} | \
+		grep -oE 'PACKAGES_DISABLE_[a-zA-Z0-9]+' | \
+		grep -viE 'xbps|flatpak|nix|guix' | xargs printf ' -D%s=ON')"
+}
+
+post_install() {
+	vlicense LICENSE
+}

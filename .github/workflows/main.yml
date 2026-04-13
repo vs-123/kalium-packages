@@ -67,6 +67,7 @@ jobs:
           cd kalium-packages
           find . -name 'kalium*'
           find . -name 'ktools*'
+          find . -name 'fastfetch*'
           cd ..
 
       - name: build
@@ -79,10 +80,16 @@ jobs:
             ./xbps-src -A ${{ matrix.host }} binary-bootstrap
             ./xbps-src pkg -j4 -A ${{ matrix.host }} kalium-base-files
             ./xbps-src pkg -j4 -A ${{ matrix.host }} ktools
+            ./xbps-src pkg -j4 -A ${{ matrix.host }} Vulkan-Headers
+            ./xbps-src pkg -j4 -A ${{ matrix.host }} vulkan-loader
+            ./xbps-src pkg -j4 -A ${{ matrix.host }} fastfetch
           else
             ./xbps-src -a ${{ matrix.target }} -A ${{ matrix.host }} binary-bootstrap
             ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} kalium-base-files
             ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} ktools
+            ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} Vulkan-Headers
+            ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} vulkan-loader
+            ./xbps-src pkg -j4 -a ${{ matrix.target }} -A ${{ matrix.host }} fastfetch
           fi
 
       - name: sign
